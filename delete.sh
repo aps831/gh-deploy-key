@@ -10,6 +10,6 @@ if [[ ${privateKey} == "" || ${otherRepo} == "" ]]; then
 fi
 
 gh secret delete "${privateKey}" || true
-nameWithOwner=$(gh repo view --json nameWithOwner --jq '.nameWithOwner')
-id=$(gh repo deploy-key list --json id,title --repo "${otherRepo}" | jq -c ".[] | select( .title == \"${nameWithOwner}\") | .id" | head -n 1)
+thisRepoNameWithOwner=$(gh repo view --json nameWithOwner --jq '.nameWithOwner')
+id=$(gh repo deploy-key list --json id,title --repo "${otherRepo}" | jq -c ".[] | select( .title == \"${thisRepoNameWithOwner}\") | .id" | head -n 1)
 gh repo deploy-key delete "${id}" --repo "${otherRepo}" || true

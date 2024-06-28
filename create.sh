@@ -14,7 +14,8 @@ function cleanup {
   rm -rf "${tmpdir}"
 }
 trap cleanup EXIT
-ssh-keygen -t ed25519 -q -N '' -C "$(gh repo view --json name -q '.name')" -f "${tmpdir}/id"
-nameWithOwner=$(gh repo view --json nameWithOwner --jq '.nameWithOwner')
-gh secret set "${privateKey}" -b"$(cat "${tmpdir}"/id)" --app actions --repo "${nameWithOwner}"
-gh repo deploy-key add "${tmpdir}/id.pub" --title "${nameWithOwner}" --repo "${otherRepo}"
+thisRepoNameWithOwner=$(gh repo view --json nameWithOwner --jq '.nameWithOwner')
+otherRepoUrl=$(gh repo view "${otherRepo}" --json url -q '.url')
+ssh-keygen -t ed25519 -q -N '' -C "${otherRepoUrl}" -f "${tmpdir}/id"
+gh secret set "${privateKey}" -b"$(cat "${tmpdir}"/id)" --app actions --repo "${thisRepoNameWithOwner}"
+gh repo deploy-key add "${tmpdir}/id.pub" --title "${thisRepoNameWithOwner}" --repo "${otherRepo}"
