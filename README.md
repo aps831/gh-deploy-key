@@ -5,7 +5,7 @@ This repository provides scripts for adding and removing SSH deploy keys to GitH
 To create a deploy key use:
 
 ```bash
-curl -s -L https://raw.githubusercontent.com/aps831/gh-deploy-key/v0.1.0/create.sh | bash -s -- <private_key_name> <owner/repo>
+curl -s -L https://raw.githubusercontent.com/aps831/gh-deploy-key/v0.2.0/create.sh | bash -s -- <private_key_name> <owner/repo>
 ```
 
 where `<private_key_name>` is the name of the secret holding the SSH private key, eg
@@ -14,5 +14,5 @@ where `<private_key_name>` is the name of the secret holding the SSH private key
 To delete a deploy key use:
 
 ```bash
-curl -s -L https://raw.githubusercontent.com/aps831/gh-deploy-key/v0.1.0/delete.sh | bash -s -- <private_key_name> <owner/repo>
+curl -s -L https://raw.githubusercontent.com/aps831/gh-deploy-key/v0.2.0/delete.sh | bash -s -- <private_key_name> <owner/repo>
 ```
