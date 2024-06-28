@@ -18,4 +18,8 @@ thisRepoNameWithOwner=$(gh repo view --json nameWithOwner --jq '.nameWithOwner')
 otherRepoUrl=$(gh repo view "${otherRepo}" --json url -q '.url')
 ssh-keygen -t ed25519 -q -N '' -C "${otherRepoUrl}" -f "${tmpdir}/id"
 gh secret set "${privateKey}" -b"$(cat "${tmpdir}"/id)" --app actions --repo "${thisRepoNameWithOwner}"
-gh repo deploy-key add "${tmpdir}/id.pub" --title "${thisRepoNameWithOwner}" --repo "${otherRepo}"
+if [[ ${thisRepoNameWithOwner} == "${otherRepo}" ]]; then
+  gh repo deploy-key add "${tmpdir}/id.pub" --title "${thisRepoNameWithOwner}" --repo "${otherRepo}" --allow-write
+else
+  gh repo deploy-key add "${tmpdir}/id.pub" --title "${thisRepoNameWithOwner}" --repo "${otherRepo}"
+fi
