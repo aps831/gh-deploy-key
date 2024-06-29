@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2024-06-29
+
+### Features
+
+- Add parameter for this repo
+
 ## [0.2.0] - 2024-06-28
 
 ### Bug Fixes
@@ -15,6 +21,10 @@ All notable changes to this project will be documented in this file.
 ### Features
 
 - Allow write if repo is self
+
+### Miscellaneous Tasks
+
+- Update for v0.2.0 release [skip ci]
 
 ### Build
 
