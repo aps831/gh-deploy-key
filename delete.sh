@@ -2,14 +2,14 @@
 set -e
 
 privateKey=$1
-otherRepo=$2
+thisRepo=$2
+otherRepo=$3
 
-if [[ ${privateKey} == "" || ${otherRepo} == "" ]]; then
-  echo "usage: private key name and repo name must be supplied"
+if [[ ${privateKey} == "" || ${thisRepo} == "" || ${otherRepo} == "" ]]; then
+  echo "usage: private key name, this repo and other repo name must be supplied"
   exit 1
 fi
 
-gh secret delete "${privateKey}" || true
-thisRepoNameWithOwner=$(gh repo view --json nameWithOwner --jq '.nameWithOwner')
-id=$(gh repo deploy-key list --json id,title --repo "${otherRepo}" | jq -c ".[] | select( .title == \"${thisRepoNameWithOwner}\") | .id" | head -n 1)
+gh secret delete "${privateKey}" --repo "${thisRepo}" || true
+id=$(gh repo deploy-key list --json id,title --repo "${otherRepo}" | jq -c ".[] | select( .title == \"${thisRepo}\") | .id" | head -n 1)
 gh repo deploy-key delete "${id}" --repo "${otherRepo}" || true
